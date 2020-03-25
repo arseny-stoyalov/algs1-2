@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab</title>
+</head>
+<body>
+<h1>Insertion sort</h1>
+<form action="#" th:action="@{/}" th:object="${matrix}" method="post">
+    <p>Matrix:
+    <br><textarea rows="20" cols="80" th:field="*{value}"></textarea>
+    </p>
+    <p>
+        <input type="submit" value="Submit"/>
+        <input type="reset" value="Reset"/>
+    </p>
+</form>
+</body>
+</html>
