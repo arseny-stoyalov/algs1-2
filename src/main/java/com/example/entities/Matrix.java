@@ -1,20 +1,17 @@
 package com.example.entities;
 
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Setter;
 
 @Data
 public class Matrix {
 
-    private String value;
+    private String strValue;
 
-    @Setter(value = AccessLevel.NONE)
     private int[][] intValue;
 
     private int[][] generateIntValue(){
-        value = makeStringMatrixPretty(value);
-        intValue = convertToInt(value);
+        strValue = makeStringMatrixPretty(strValue);
+        intValue = convertToInt(strValue);
         return intValue;
     }
 
@@ -22,13 +19,13 @@ public class Matrix {
 
         String prettyMatrix = matrix.trim();
         prettyMatrix = prettyMatrix.replaceAll("\\p{Blank}{2,}", " ");
-        prettyMatrix = prettyMatrix.replaceAll("[\r\n]{2,}", "\n");
+        prettyMatrix = prettyMatrix.replaceAll("[\r\n]{2,}", "\r\n");
         return prettyMatrix;
     }
 
     private int[][] convertToInt(String matrix) {
 
-        String[] lines = matrix.split("[\n]");
+        String[] lines = matrix.split("\r\n");
         String[][] strRes = new String[lines.length][];
         int[][] res = new int[lines.length][];
         for (int i = 0; i < lines.length; i++) {
@@ -44,9 +41,22 @@ public class Matrix {
         return intValue == null ? generateIntValue() : intValue;
     }
 
-    public void setValue(String value){
-        this.value = value;
+    public void setStrValue(String strValue){
+        this.strValue = strValue;
         this.intValue = null;
+    }
+
+    public void setIntValue(int[][] intValue) {
+        this.intValue = intValue;
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < intValue.length; i++) {
+            for (int j = 0; j < intValue[i].length; j++) {
+                builder.append(intValue[i][j]);
+                if(j < intValue[i].length - 1) builder.append(" ");
+            }
+            if(i < intValue.length - 1) builder.append("\r\n");
+        }
+        this.strValue = builder.toString();
     }
 
 }

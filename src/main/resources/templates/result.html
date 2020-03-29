@@ -3,17 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Lab</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
-<h1>Insertion sort</h1>
-<form>
+<h1>Matrix Sort</h1>
+<span style="float:left;">
+<form action="#" th:action="@{/}" th:object="${matrix}" method="post">
     <p>Matrix:
-        <br><textarea rows="20" cols="80" th:text="${textValue}" readonly></textarea>
+        <br><textarea rows="20" cols="80" th:text="${textValue}" th:field="*{strValue}"></textarea>
     </p>
     <p>
-        <input type="submit" value="Submit" disabled/>
-        <input type="reset" value="Reset" disabled/>
+        <input type="submit" value="Submit"/>
+        <input type="reset" value="Reset"/>
     </p>
 </form>
+</span>
+<span style="float:right;">
+<form>
+    <p>Result:</p>
+    <p th:text="'Default sort algorithm: ' + ${defaultTime} + 'ns'"></p>
+    <p th:text="'Insertion sort algorithm: ' + ${insertionTime} + 'ns'"></p>
+    <p th:text="'Quick sort algorithm: ' + ${quickTime} + 'ns'"></p>
+    <br><textarea rows="20" cols="80" th:text="${resMatrix}" readonly></textarea>
+</form>
+</span>
 </body>
 </html>
