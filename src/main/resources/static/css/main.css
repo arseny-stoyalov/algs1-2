@@ -18,9 +18,15 @@ h1 {
     padding-top: 7px;
 }
 
-#sSymbol {
+#symbolSearch {
     color: gold;
     background-color: black;
+    padding-left: 11px;
+    padding-right: 11px;
+}
+
+#symbolSort {
+    background-color: white;
     padding-left: 11px;
     padding-right: 11px;
 }

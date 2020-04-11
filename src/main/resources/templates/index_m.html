@@ -1,24 +1,87 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Lab 1</title>
-<!--    <link rel="stylesheet" th:href="@{/css/main.css}">-->
+    <link rel="stylesheet" th:href="@{/css/main.css}">
     <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="icon" href="https://image.flaticon.com/icons/svg/2781/2781039.svg">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 </head>
+
 <body>
-<h1>Matrix Sort</h1>
-<span style="float:left;">
-<form action="#" th:action="@{/sort}" th:object="${matrix}" method="post">
-    <p>Matrix:
-    <br><textarea rows="20" cols="80" th:field="*{strValue}"></textarea>
-    </p>
-    <p>
-        <input type="submit" value="Submit"/>
-        <input type="reset" value="Reset"/>
-    </p>
-</form>
-</span>
+    <div class="container-fluid bg-danger">
+        <h1><span id="symbolSort" class="text-danger">&#83;</span><span style="color: white">ort</span></h1>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6" style="padding-left: 25px;">
+                <form id="mainForm" action="#" th:action="@{/sort}" method="post">
+                    <ul class="list-group" style="padding: 10px">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text form-control text-uppercase bg-danger text-white">Matrix</div>
+                        </div>
+                        <textarea id="txtMatrix" name="matrix" class="form-control" rows="10" th:text="${saveMatrix}"></textarea>
+                    </ul>
+                    <div class="btn-group" role="group" style="padding-left: 10px">
+                        <button id="btnSubmit" type="button" onclick="calculate()" class="btn btn-outline-danger">Submit</button>
+                        <button id="btnReset" type="button" onclick="removeInfo()" class="btn  btn-outline-danger">Reset</button>
+                    </div>
+                </form>
+            </div>
+            <ul class="list-group col-md-6" style="padding-top: 11px">
+                <div id="lblRes" class="input-group-text form-control text-uppercase bg-danger text-white">Result</div>
+                <li class="list-group-item">
+                    <pre id="defaultSort" th:text="${defaultTime}"></pre>
+                </li>
+                <li class="list-group-item">
+                    <pre id="insertionSort" th:text="${insertionTime}"></pre>
+                </li>
+                <li class="list-group-item">
+                    <pre id="quickSort" th:text="${quickTime}"></pre>
+                </li>
+                <li class="list-group-item">
+                    <pre id="res" th:text="${resMatrix}"></pre>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        function calculate() {
+            var error = "";
+            var exitOnError = false;
+            if (document.getElementById("txtMatrix").value.match(/^([/\s/]*[0-9][/\s/]*)*$/) == null) {
+                error = error + "\t\tInvalid matrix value\n";
+                exitOnError = true;
+            }
+            if (!document.getElementById("txtMatrix").value) {
+                error = error + "\t\tEnter matrix to sort\n";
+                exitOnError = true;
+            }
+            if (exitOnError) {
+                document.getElementById("defaultSort").textContent = error;
+                error = "";
+                return;
+            }
+            document.getElementById("defaultSort").textContent = "";
+            document.getElementById("insertionSort").textContent = "";
+            document.getElementById("quickSort").textContent = "";
+            document.getElementById("res").textContent = "";
+            document.getElementById("mainForm").submit();
+        }
+
+        function removeInfo() {
+            document.getElementById("txtMatrix").value = "";
+            document.getElementById("defaultSort").textContent = "";
+            document.getElementById("insertionSort").textContent = "";
+            document.getElementById("quickSort").textContent = "";
+            document.getElementById("res").textContent = "";
+        }
+
+    </script>
 </body>
+
 </html>

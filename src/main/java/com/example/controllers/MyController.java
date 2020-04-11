@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 @Slf4j
 @Controller
 public class MyController {
@@ -27,7 +25,6 @@ public class MyController {
 
     @RequestMapping(method = RequestMethod.GET, value = "sort")
     public String matrixForm(Model model) {
-        model.addAttribute("matrix", new Matrix());
         return "index_m";
     }
 
@@ -53,15 +50,15 @@ public class MyController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "sort")
-    public String matrixSubmit(@ModelAttribute Matrix matrix, Model model) {
-        String prettyMatrix = matrix.getStrValue();
-        model.addAttribute("textValue", prettyMatrix);
+    public String matrixSubmit(@RequestParam("matrix") String strMatrix, Model model) {
+        Matrix matrix = new Matrix(strMatrix);
+        model.addAttribute("saveMatrix", matrix.getStrValue());
         String[] res = algorithmTester.testSort(matrix);
         model.addAttribute("resMatrix", res[0]);
         model.addAttribute("defaultTime", res[1]);
         model.addAttribute("insertionTime", res[2]);
         model.addAttribute("quickTime", res[3]);
-        return "result_m";
+        return "index_m";
     }
 
 }

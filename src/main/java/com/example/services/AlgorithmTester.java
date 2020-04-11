@@ -112,10 +112,10 @@ public class AlgorithmTester {
         long quickTime = getAlgTime(algorithm, quickSort, SortName.QUICK);
 
         aMatrix.setIntValue(defaultSort);
-        result[0] = aMatrix.getStrValue();
-        result[1] = String.valueOf(defaultTime);
-        result[2] = String.valueOf(insertionTime);
-        result[3] = String.valueOf(quickTime);
+        result[0] = "Result: \n" + aMatrix.getStrValue();
+        result[1] = "Default sort algorithm: " + defaultTime + " ns";
+        result[2] = "Insertion sort algorithm: " + insertionTime + " ns";
+        result[3] = "Quick sort algorithm: " + quickTime + " ns";
         return result;
     }
 
