@@ -2,13 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Lab</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <title>Lab 1</title>
+<!--    <link rel="stylesheet" th:href="@{/css/main.css}">-->
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="icon" href="https://image.flaticon.com/icons/svg/2781/2781039.svg">
 </head>
 <body>
 <h1>Matrix Sort</h1>
 <span style="float:left;">
-<form action="#" th:action="@{/}" th:object="${matrix}" method="post">
+<form action="#" th:action="@{/sort}" th:object="${matrix}" method="post">
     <p>Matrix:
     <br><textarea rows="20" cols="80" th:field="*{strValue}"></textarea>
     </p>

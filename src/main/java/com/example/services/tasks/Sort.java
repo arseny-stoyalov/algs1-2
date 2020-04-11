@@ -1,7 +1,7 @@
-package com.example.services;
+package com.example.services.tasks;
 
-import com.example.entities.SortIntMatrix;
-import com.example.entities.SortName;
+import com.example.entities.sort.SortIntMatrix;
+import com.example.entities.sort.SortName;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;

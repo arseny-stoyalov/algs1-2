@@ -1,9 +1,26 @@
-H1 {
-  color: #000000;
-  font-size: 200%;
-  font-family: Arial, Verdana, sans-serif;
-  text-align: center;
+h1 {
+    padding-left: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    letter-spacing: 2px;
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 24px;
 }
-body {
-padding-left: 20px
+
+#txtArray {
+    background-color: white;
+}
+
+.msgPrompt {
+    color: darkgrey;
+    padding-top: 7px;
+}
+
+#sSymbol {
+    color: gold;
+    background-color: black;
+    padding-left: 11px;
+    padding-right: 11px;
 }

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Lab 2</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="icon" href="https://image.flaticon.com/icons/svg/2781/2781039.svg">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container-fluid" style="background-color: gold">
+        <h1><span id="sSymbol">&#83;</span>earch</h1>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6" style="padding-left: 25px;">
+                <form id="mainForm" action="#" th:action="@{/intSearch}" method="post">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text text-uppercase" id="inputGroup-sizing-default">Data</span>
+                        </div>
+                        <input id="txtArray" readonly name="array" type="text" th:value="${saveArray}" class="form-control">
+                    </div>
+                    <button onclick="generate()" type="button" class="btn form-control btn-secondary mb-3">Generate</button>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text text-uppercase">Find</span>
+                        </div>
+                        <input id="txtToFind" name="toFind" type="text" th:value="${saveFind}" class="form-control">
+                    </div>
+                    <div class="input-group mb-3" style="padding-left: 0px">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text text-uppercase" style="background-color: gold">Add</span>
+                        </div>
+                        <input id="txtToAdd" name="toAdd" type="text" th:value="${saveAdd}" class="form-control">
+                        <div id="msgA" class="col-md-5 msgPrompt">Enter integer numbers to add</div>
+                    </div>
+                    <div class="input-group mb-3" style="padding-left: 0px">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text text-uppercase" style="background-color: gold">Remove</span>
+                        </div>
+                        <input id="txtToRemove" name="toRemove" type="text" th:value="${saveRemove}" class="form-control">
+                        <div id="msgR" class="col-md-5 msgPrompt">Enter integer numbers to remove</div>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button id="btnSubmit" type="button" onclick="calculate()" class="btn btn-secondary">Submit</button>
+                        <button id="btnReset" type="button" onclick="removeInfo()" class="btn btn-secondary">Reset</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <pre id="res" th:text="${res}">
+                </pre>
+                <pre id="resFind" th:text="${resFind}">
+                </pre>
+                <pre id="resAdd" th:text="${resAdd}">
+                </pre>
+                <pre id="resRemove" th:text="${resRemove}">
+                </pre>
+            </div>
+        </div>
+    </div>
+    <script>
+        function calculate() {
+            var error = "";
+            var exitOnError = false;
+            if (document.getElementById("txtToRemove").value.match(/^([0-9][/\s/]*)*$/) == null) {
+                error = error + "\t\tInvalid data in Remove field\n";
+                exitOnError = true;
+            }
+            if (document.getElementById("txtToAdd").value.match(/^([0-9][/\s/]*)*$/) == null) {
+                error = error + "\t\tInvalid data in ADD field\n";
+                exitOnError = true;
+            }
+            if (document.getElementById("txtToFind").value.match(/^([0-9][/\s/]*)*$/) == null) {
+                error = error + "\t\tInvalid data in FIND field\n";
+                exitOnError = true;
+            }
+            if (document.getElementById("txtToFind").value.match(/^([0-9][/\s/]*)*$/) != null &&
+                document.getElementById("txtToFind").value.match(/^([0-9])*$/) == null) {
+                error = error + "\t\tEnter just ONE number to find in array\n";
+                exitOnError = true;
+            }
+            if (!document.getElementById("txtToFind").value) {
+                error = error + "\t\tEnter a number to find in array\n";
+                exitOnError = true;
+            }
+            if (!document.getElementById("txtArray").value) {
+                error = error + "\t\tGenerate or add DATA\n";
+                exitOnError = true;
+            }
+            if (exitOnError) {
+                document.getElementById("res").textContent = error;
+                error = "";
+                return;
+            }
+            document.getElementById("res").textContent = "";
+            document.getElementById("resFind").textContent = "";
+            document.getElementById("resAdd").textContent = "";
+            document.getElementById("resRemove").textContent = "";
+            document.getElementById("mainForm").submit();
+        }
+
+        function add() {
+            var toAdd = document.getElementById("txtToAdd").value;
+            if (toAdd.match(/^([0-9][/\s/]*)+$/) != null) {
+                document.getElementById("txtArray").value = document.getElementById("txtArray").value + toAdd + " ";
+            } else document.getElementById("txtToAdd").value = "";
+        }
+
+        function generate() {
+            var randoms = [...Array(10)].map(() =>
+                Math.floor(Math.random() * 50));
+            var str = "";
+            for (var i = 0; i < randoms.length; i++) {
+                str = str + randoms[i] + " ";
+            }
+            document.getElementById("txtArray").value = str;
+        }
+
+        function removeInfo() {
+            document.getElementById("txtArray").value = "";
+            document.getElementById("txtToFind").value = "";
+            document.getElementById("txtToAdd").value = "";
+            document.getElementById("txtToRemove").value = "";
+            document.getElementById("res").textContent = "";
+            document.getElementById("resFind").textContent = "";
+            document.getElementById("resAdd").textContent = "";
+            document.getElementById("resRemove").textContent = "";
+        }
+    </script>
+</body></html>

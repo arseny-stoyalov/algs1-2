@@ -1,3 +1,3 @@
-package com.example.entities;
+package com.example.entities.sort;
 
 public enum SortName{INSERTION, QUICK, DEFAULT}
