@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +17,7 @@ public class MyController {
     @Autowired
     private AlgorithmTester algorithmTester;
 
-    @RequestMapping(method = RequestMethod.GET, value = "intSearch")
+    @RequestMapping(method = RequestMethod.GET, value = "search")
     public String arrayForm(Model model) {
         return "index_a";
     }
@@ -28,7 +27,7 @@ public class MyController {
         return "index_m";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "intSearch")
+    @RequestMapping(method = RequestMethod.POST, value = "search")
     public String arraySubmit(Model model,
                               @RequestParam("array") String array,
                               @RequestParam("toFind") String find,
