@@ -16,7 +16,7 @@
     <div class="container-fluid bg-danger">
         <h1><span id="symbolSort" class="text-danger">&#83;</span><span style="color: white">ort</span></h1>
     </div>
-    <div class="container-fluid">
+    <div class="container-fluid" style="padding-bottom: 30px;">
         <div class="row">
             <div class="col-md-6" style="padding-left: 25px;">
                 <form id="mainForm" action="#" th:action="@{/sort}" method="post">
@@ -49,7 +49,26 @@
             </ul>
         </div>
     </div>
+    <div style="padding-left: 35px;">
+        <button type="button" onclick="hitEndpoint('https://student-bvt1803-20.herokuapp.com/search')" class="btn btn-danger">Search Lab</button>
+    </div>
     <script>
+        function hitEndpoint(url) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                //we're done making the request
+                if (this.readyState === 4) {
+                    //status code was successful
+                    if (this.status === 200) {
+                        console.log("hit endpoint successfully")
+                    } else {
+                        console.log("error hitting endpoint");
+                    }
+                }
+            };
+            xhttp.open("GET", url);
+            xhttp.send();
+        }
         function calculate() {
             var error = "";
             var exitOnError = false;
