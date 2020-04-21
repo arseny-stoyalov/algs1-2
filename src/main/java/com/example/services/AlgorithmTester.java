@@ -26,7 +26,6 @@ public class AlgorithmTester {
         List<Integer[]> args = parseStringArgs(strArgs);
 
         DataStructure data = new DataStructure(args.get(0));
-        List<Integer> list = List.of(args.get(0));
         List<Integer> toFind = List.of(args.get(1));
 
         List<Integer> toAdd = null;
@@ -35,8 +34,11 @@ public class AlgorithmTester {
         if (args.get(3)[0] != null) toRemove = List.of(args.get(3));
         StringBuilder builder = new StringBuilder();
 
+        Integer[] sorted = new Integer[args.get(0).length];
+        System.arraycopy(args.get(0), 0, sorted, 0, args.get(0).length);
+        Arrays.sort(sorted);
         builder.append("Find ").append(toFind.get(0)).append("\n");
-        builder.append("Index: ").append(ArrayMethods.interpolationSearch(args.get(0), toFind.get(0)))
+        builder.append("Index: ").append(ArrayMethods.interpolationSearch(sorted, toFind.get(0)))
                 .append("\n");
         Method interpolation = null;
         Method binary = null;
@@ -49,18 +51,16 @@ public class AlgorithmTester {
 
         if (interpolation == null || binary == null) return null;
 
-        Integer[] temp = new Integer[args.get(0).length];
-        System.arraycopy(args.get(0), 0, temp, 0, args.get(0).length);
-        Arrays.sort(temp);
-        int[] intTemp = new int[temp.length];
-        for (int i = 0; i < temp.length; i++) {
-            intTemp[i] = temp[i];
+
+        int[] temp = new int[sorted.length];
+        for (int i = 0; i < sorted.length; i++) {
+            temp[i] = sorted[i];
         }
 
         builder.append("Interpolation search: ")
-                .append(getAlgTime(interpolation, temp, toFind.get(0))).append(" ns\n");
+                .append(getAlgTime(interpolation, sorted, toFind.get(0))).append(" ns\n");
         builder.append("Default search: ")
-                .append(getAlgTime(binary, intTemp, toFind.get(0))).append(" ns\n");
+                .append(getAlgTime(binary, temp, toFind.get(0))).append(" ns\n");
         res[1] = builder.toString();
 
         builder.delete(0, builder.length());
@@ -85,7 +85,7 @@ public class AlgorithmTester {
             builder.delete(0, builder.length());
         }
 
-        builder.append("Result: ").append(data.toString());
+        builder.append("Sorted result: ").append(Arrays.toString(sorted));
         res[0] = builder.toString();
 
         return res;
@@ -152,13 +152,6 @@ public class AlgorithmTester {
         }
         return res;
     }
-
-//    private long getAlgTime(int[][] matrix, SortName sortName){
-//        long start = System.nanoTime();
-//        Sort.sortMatrix(matrix, sortName);
-//        long end = System.nanoTime();
-//        return end - start;
-//    }
 
     private long getAlgTime(Method algorithm, Object... args) {
 
